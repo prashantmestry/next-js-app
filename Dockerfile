@@ -16,7 +16,7 @@ FROM node:18-alpine as PRODUCTION_IMAGE
 WORKDIR /app/
 
 # Copy built files from the previous stage to the nginx web server's folder
-COPY --from=BUILD_IMAGE /app/dist /app/dist/
+COPY --from=BUILD_IMAGE /.next /.next
 EXPOSE 8080
 
 COPY package.json .
