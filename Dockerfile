@@ -29,7 +29,7 @@ RUN npm install --only=production
 # Copy the built files from the builder stage
 COPY --from=builder /app/.next ./.next
 COPY --from=builder /app/public ./public
-COPY --from=builder /app/next.config.js ./next.config.js
+COPY --from=builder /app/next.config.mjs ./next.config.mjs
 
 # Set environment variable for production
 ENV NODE_ENV production
