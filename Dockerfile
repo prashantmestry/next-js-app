@@ -1,29 +1,41 @@
-# Use the official Node.js image as the base image
-FROM node:18-alpine AS BUILD_IMAGE
+# Stage 1: Build
+FROM node:18 AS builder
+
+# Set working directory
 WORKDIR /app
 
-COPY package*.json ./
+# Copy package.json and package-lock.json
+COPY package.json package-lock.json ./
+
 # Install dependencies
 RUN npm install
 
-# Copy the rest of the application files
+# Copy the rest of the application code
 COPY . .
-# Build the Vite project
+
+# Build the Next.js application
 RUN npm run build
 
-# Use a lightweight server to serve the static files
-FROM node:18-alpine as PRODUCTION_IMAGE
-WORKDIR ./
+# Stage 2: Production
+FROM node:18-alpine AS runner
 
-# Copy built files from the previous stage to the nginx web server's folder
-COPY --from=BUILD_IMAGE /.build /.build
-EXPOSE 8080
+# Set working directory
+WORKDIR /app
 
-COPY package.json .
-# COPY vite.config.js .
+# Install dependencies for production
+COPY package.json package-lock.json ./
+RUN npm install --only=production
 
-# RUN npm install typescript
+# Copy the built files from the builder stage
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
+COPY --from=builder /app/next.config.js ./next.config.js
 
-# Start Nginx server
-# CMD ["nginx", "-g", "daemon off;"]
-CMD ["npm", "run", "dev"]
+# Set environment variable for production
+ENV NODE_ENV production
+
+# Expose port 3000
+EXPOSE 3000
+
+# Start the Next.js application
+CMD ["npm", "start"]
