@@ -13,7 +13,7 @@ RUN npm run build
 
 # Use a lightweight server to serve the static files
 FROM node:18-alpine as PRODUCTION_IMAGE
-WORKDIR /app/
+WORKDIR ./
 
 # Copy built files from the previous stage to the nginx web server's folder
 COPY --from=BUILD_IMAGE /.build /.build
