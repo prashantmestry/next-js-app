@@ -10,7 +10,6 @@ exports[`Header component testing Header snapshot test 1`] = `
     >
       About
     </a>
-     work
   </header>
 </div>
 `;
