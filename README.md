@@ -36,3 +36,12 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
 
 ![Coverage Status](https://codecov.io/gh/USERNAME/REPOSITORY/branch/main/graph/badge.svg)
+
+# Recommended commit message format:
+
+<type>(<scope>): <subject>
+Examples:
+
+- feat(auth): Add login functionality
+- fix(api): Correct null pointer error
+- docs: Update README with project setup
